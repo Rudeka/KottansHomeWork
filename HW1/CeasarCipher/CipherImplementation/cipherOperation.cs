@@ -10,7 +10,7 @@ namespace CipherImplementation
     {
         private int key;
         private string stringToOperate;
-        private char[] alphabet = Enumerable.Range('a', 26).Select(x => (char) x).ToArray();
+        //private char[] alphabet = Enumerable.Range('a', 26).Select(x => (char) x).ToArray();
 
         public CipherOperation(int key, string stringToOperate)
         {
@@ -20,17 +20,57 @@ namespace CipherImplementation
 
         public string RunCipher()
         {
-            //try { 
-            char[] charWord = stringToOperate.ToCharArray();
+            Exception nullException;
+            Exception outOfRangExeption;
 
-            for (var i = 0; i < charWord.Length; i++)
+            if (stringToOperate == null)
             {
-                var currentLetterCode = (int)charWord[i];
-                charWord[i] = (char)(currentLetterCode + key);
+                throw nullException = new ArgumentNullException();
             }
-            
-            return new String(charWord);
-            //}
+
+            else
+            {
+                char[] charWord = stringToOperate.ToCharArray();
+                for (var i = 0; i < charWord.Length; i++)
+                {
+                    var currentLetterCode = (int) charWord[i];
+                    
+                    if (currentLetterCode > '~')
+                    {
+                        throw outOfRangExeption = new ArgumentOutOfRangeException();
+                    }
+
+                    if (currentLetterCode == '~' )
+                    {
+                        
+                        if (key > 0)
+                        {
+                            charWord[i] = (char)(' ' + key);
+                        }
+                    }
+
+                    else if (currentLetterCode == '!')
+                    {
+                        if (key < 0)
+                        {
+                            charWord[i] = (char)(127 + key);
+                        }
+                    }
+
+                    //    if (currentLetterCode > 126)
+                    //    {
+                    //        currentLetterCode = currentLetterCode - 93;
+                    //    }
+                    else
+                    {
+                        charWord[i] = (char)(currentLetterCode + key);
+                    }
+                }
+                return new String(charWord);
+            }
+
+
         }
     }
 }
+
