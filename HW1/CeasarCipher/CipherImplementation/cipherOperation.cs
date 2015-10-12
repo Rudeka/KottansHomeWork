@@ -10,7 +10,6 @@ namespace CipherImplementation
     {
         private int key;
         private string stringToOperate;
-        //private char[] alphabet = Enumerable.Range('a', 26).Select(x => (char) x).ToArray();
 
         public CipherOperation(int key, string stringToOperate)
         {
@@ -57,10 +56,6 @@ namespace CipherImplementation
                         }
                     }
 
-                    //    if (currentLetterCode > 126)
-                    //    {
-                    //        currentLetterCode = currentLetterCode - 93;
-                    //    }
                     else
                     {
                         charWord[i] = (char)(currentLetterCode + key);
@@ -68,8 +63,6 @@ namespace CipherImplementation
                 }
                 return new String(charWord);
             }
-
-
         }
     }
 }
