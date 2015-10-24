@@ -153,7 +153,7 @@ namespace MatrixImplementation
             {
                 for (int j = 0; j < arr.GetLength(1); j++)
                 {
-                    newArr[j, i] += arr[i, j];
+                    newArr[j, i] = arr[i, j];
                 }
             }
             return new CoolMatrix(newArr);
