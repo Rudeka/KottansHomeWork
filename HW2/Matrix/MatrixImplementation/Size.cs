@@ -45,7 +45,6 @@ namespace MatrixImplementation
 
         private int width;
         private int height;
-
         private bool isSquare;
         public Size(int width, int height)
         {
@@ -57,10 +56,5 @@ namespace MatrixImplementation
         public int Width => width;
         public int Height => height;
         public bool IsSquare => isSquare;
-
-        //public bool IsSquare()
-        //{
-        //    return Width == Height;
-        //}
     }
 }
