@@ -31,7 +31,7 @@ namespace Battleship.Tests
 
             Assert.AreEqual(expectedX, position.X);
             Assert.AreEqual(expectedY, position.Y);
-            Assert.AreEqual(expectedLength, position.Length);
+            Assert.AreEqual(expectedLength, position.Size);
             Assert.AreEqual(expectedDirection, position.Direction);
         }
     }

@@ -42,12 +42,14 @@
   <ItemGroup>
     <Compile Include="AircraftCarrier.cs" />
     <Compile Include="Board.cs" />
+    <Compile Include="BoardIsNotReadyException.cs" />
     <Compile Include="Cruiser.cs" />
     <Compile Include="Direction.cs" />
     <Compile Include="NotAShipException.cs" />
     <Compile Include="PatrolBoat.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Ship.cs" />
+    <Compile Include="ShipOverlapException.cs" />
     <Compile Include="Submarine.cs" />
     <Compile Include="XCoordinates.cs" />
   </ItemGroup>

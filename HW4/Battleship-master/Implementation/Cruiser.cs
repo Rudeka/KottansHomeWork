@@ -4,10 +4,10 @@ namespace Implementation
 {
     public class Cruiser : Ship, IEquatable<Cruiser>
     {
-        private int coorX;
-        private int coorY;
+        private readonly int coorX;
+        private readonly int coorY;
         private int _size;
-        private Direction _direction;
+        private readonly Direction _direction;
 
 #region Equality members
         public bool Equals(Cruiser other)
@@ -47,12 +47,13 @@ namespace Implementation
         }
         #endregion
 
-        public Cruiser (int x, int y)
+        public Cruiser(int x, int y, int size = 2)
         {
             coorX = x;
             coorY = y;
+            _size = size;
         }
-        public Cruiser (int x, int y, Direction direction)
+        public Cruiser(int x, int y, Direction direction)
         {
             coorX = x;
             coorY = y;

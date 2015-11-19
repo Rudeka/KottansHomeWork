@@ -4,12 +4,12 @@ namespace Implementation
 {
     public class PatrolBoat : Ship, IEquatable<PatrolBoat>
     {
-        private int coorX ;
+        private int coorX;
         private int coorY;
         private int _size;
         private Direction _direction;
 
-#region Equality Members
+        #region Equality Members
         public bool Equals(PatrolBoat other)
         {
             if (ReferenceEquals(null, other)) return false;
@@ -44,10 +44,11 @@ namespace Implementation
         }
         #endregion
 
-        public PatrolBoat(int x, int y)
+        public PatrolBoat(int x, int y, int size = 1)
         {
             coorX = x;
             coorY = y;
+            _size = size;
         }
         public PatrolBoat(int x, int y, Direction direction)
         {
@@ -60,7 +61,7 @@ namespace Implementation
         {
             coorX = x;
             coorY = y;
-            _size = size; 
+            _size = size;
             _direction = direction;
         }
     }
