@@ -107,28 +107,29 @@ namespace Implementation
         public bool FitsInSquare(int squareHeight, int squareWidth, 
             Direction direction = Direction.Horizontal)
         {
+            var shipLastX = X + Size - 1;
 
-            int sizeX, sizeY;
-            var square = squareWidth * squareHeight;
+            var shipAllX = new List<int>();
+            var shipAllY = new List<int> { Y };
 
             if (Direction == Direction.Vertical)
             {
-                sizeY = Y * Size;
-                sizeX = X;
+                shipLastX = X;
+                var shipLastY = Y + Size - 1;
+                for (var i = Y + 1; i < shipLastY; i++)
+                {
+                    shipAllY.Add(i);
+                }
+
             }
-            else
+
+            for (var i = X; i <= shipLastX; i++)
             {
-                sizeX = X * Size;
-                sizeY = Y;
+                shipAllX.Add(i);
             }
 
-            return squareHeight >= Y
-                   && squareWidth >= X
-                   && squareHeight >= sizeY
-                   && squareWidth >= sizeX
-                   && square >= sizeY
-                   && square >= sizeX;
-
+            return shipAllX.All(x => x <= squareWidth) 
+                && shipAllY.All(y => y <= squareHeight);
         }
 
         public bool OverlapsWith(Ship otherShip)
@@ -143,12 +144,16 @@ namespace Implementation
             var shipAllY = new List<int> { Y };
             var otherShipAllY = new List<int> { otherShip.Y };
 
-          
+            var xCoordinatesForGap = new List<int>();
+            var yCoordinatesForGap = new List<int>();
+
+
+
             if (Direction == Direction.Vertical)
             {
                 shipLastX = X;
                 shipLastY = Y + Size - 1;
-                for (var i = Y; i < shipLastY; i++)
+                for (var i = Y+1; i < shipLastY; i++)
                 {
                     shipAllY.Add(i);
                 }
@@ -160,7 +165,7 @@ namespace Implementation
             {
                 otherShipLastX = otherShip.X;
                 otherShipLastY = otherShip.Y + otherShip.Size - 1;
-                for (var i = Y; i < otherShipLastY; i++)
+                for (var i = Y+1; i < otherShipLastY; i++)
                 {
                     otherShipAllY.Add(i);
                 }
@@ -177,6 +182,20 @@ namespace Implementation
                 otherShipAllX.Add(i);
             }
 
+            foreach (var shipX in shipAllX)
+            {
+                xCoordinatesForGap.Add(shipX);
+                xCoordinatesForGap.Add(shipX + 1);
+                xCoordinatesForGap.Add(shipX - 1);
+            }
+
+            foreach (var shipY in shipAllY)
+            {
+                yCoordinatesForGap.Add(shipY);
+                yCoordinatesForGap.Add(shipY + 1);
+                yCoordinatesForGap.Add(shipY - 1);
+            }
+
             if (X == otherShip.X && Y == otherShip.Y) return true;
 
             if (otherShipAllX.Any(t => otherShipAllY.Any(t1 => shipAllX.Any(a => a == t)
@@ -185,87 +204,9 @@ namespace Implementation
                 return true;
             }
 
-            foreach (var t in otherShipAllX)
-            {
-                foreach (var t1 in otherShipAllY)
-                {
-                    if (X < otherShip.X)
-                    {
-                        if (Y < otherShip.Y)
-                        {
-                            if (shipAllX.Any(a => a == t - 1)
-                                && shipAllY.Any(a => a == t1 - 1))
-                            {
-                                return true;
-                            }
-                        }
-                        if (Y > otherShip.Y)
-                        {
-                            if (shipAllX.Any(a => a == t - 1)
-                                && shipAllY.Any(a => a == t1 + 1))
-                            {
-                                return true;
-                            }
-                        }
-                        else
-                        {
-                            if (shipAllX.Any(a => a == t - 1)
-                                && shipAllY.Any(a => a == t1))
-                            {
-                                return true;
-                            }
-                        }
-                    }
+            return otherShipAllX.Any(t => otherShipAllY.Any(t1 => xCoordinatesForGap.Any(a => a == t)
+                                                                  && yCoordinatesForGap.Any(a => a == t1)));
 
-                    if (X > otherShip.X)
-                    {
-                        if (Y > otherShip.Y)
-                        {
-                            if (shipAllX.Any(a => a == t + 1)
-                                && shipAllY.Any(a => a == t1 + 1))
-                            {
-                                return true;
-                            }
-                        }
-                        if (Y < otherShip.Y)
-                        {
-                            if (shipAllX.Any(a => a == t + 1)
-                                && shipAllY.Any(a => a == t1 - 1))
-                            {
-                                return true;
-                            }
-                        }
-                        else
-                        {
-                            if (shipAllX.Any(a => a == t + 1)
-                                && shipAllY.Any(a => a == t1))
-                            {
-                                return true;
-                            }
-                        }
-                    }
-
-                    if (X != otherShip.X) continue;
-                    if (Y > otherShip.Y)
-                    {
-                        if (shipAllX.Any(a => a == t)
-                            && shipAllY.Any(a => a == t1 + 1))
-                        {
-                            return true;
-                        }
-                    }
-                    else
-                    {
-                        if (shipAllX.Any(a => a == t)
-                            && shipAllY.Any(a => a == t1 - 1))
-                        {
-                            return true;
-                        }
-                    }
-                }
-            }
-
-            return false;
         }
 }
 }
